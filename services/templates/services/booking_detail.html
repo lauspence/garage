@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Service Request Details</h2>
+    <ul class="list-group">
+        <li class="list-group-item"><strong>Service:</strong> {{ booking.service.name }}</li>
+        <li class="list-group-item"><strong>Vehicle:</strong> {{ booking.vehicle.registration_number }}</li>
+        <li class="list-group-item"><strong>Status:</strong> {{ booking.status|title }}</li>
+        <li class="list-group-item"><strong>Requested On:</strong> {{ booking.created_at }}</li>
+        <li class="list-group-item"><strong>Additional Notes:</strong> {{ booking.message|default:"No additional notes" }}</li>
+    </ul>
+    <a href="{% url 'services:track_service_progress' %}" class="btn btn-secondary mt-3">Back to Tracking</a>
+</div>
+{% endblock %}

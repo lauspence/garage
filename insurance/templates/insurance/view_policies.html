@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insurance Policies</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 900px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 40px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 36px;
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .policy-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .policy-list li {
+            background-color: #f9f9f9;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 18px;
+            color: #333;
+            transition: background-color 0.3s ease;
+        }
+
+        .policy-list li:hover {
+            background-color: #f1f1f1;
+        }
+
+        .policy-details {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .policy-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 8px 15px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        .btn:focus {
+            outline: none;
+        }
+
+        .policy-header {
+            font-size: 22px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 25px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            .policy-list li {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Insurance Policies</h1>
+    
+    <!-- Header Section -->
+    <div class="policy-header">
+        <p>Here you can view and manage all the insurance policies associated with the garage.</p>
+    </div>
+
+    <!-- Policy List -->
+    <ul class="policy-list">
+        {% for policy in policies %}
+            <li>
+                <div class="policy-details">
+                    <strong>Policy Number:</strong> {{ policy.policy_number }}<br>
+                    <strong>Provider:</strong> {{ policy.provider }}<br>
+                    <strong>Coverage Type:</strong> {{ policy.coverage_type }}<br>
+                    <strong>Premium Amount:</strong> KSh {{ policy.premium_amount|floatformat:2 }}
+                </div>
+                
+                <div class="policy-actions">
+                    <a href="{% url 'update_insurance_policy' policy_id=policy.id %}" class="btn">Update</a>
+                    <a href="{% url 'delete_insurance_policy' policy_id=policy.id %}" class="btn" style="background-color: #e57373;">Delete</a>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+</body>
+</html>

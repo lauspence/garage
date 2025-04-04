@@ -1,0 +1,82 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block content %}
+<!-- Hero Section -->
+<section class="hero bg-dark text-white text-center py-5 mb-5">
+    <div class="container">
+        <h1 class="display-4 font-weight-bold">WELCOME TO AZAMAN AUTO GARAGE </h1>
+        <p class="lead mb-4">Professional car repairs, maintenance, and servicing.</p>
+        <a href="{% url 'services:services' %}" class="btn btn-warning btn-lg">Explore Services</a>
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="about py-5 bg-light">
+    <div class="container text-center">
+        <h2 class="font-weight-bold mb-4">About Us</h2>
+        <p class="lead mb-4">We provide top-quality automotive repairs, servicing, and diagnostics. Our skilled mechanics ensure your vehicle runs smoothly.</p>
+    </div>
+</section>
+
+<!-- Services Overview -->
+<section class="services py-5">
+    <div class="container">
+        <h2 class="text-center font-weight-bold mb-5">Our Services</h2>
+        <div class="row text-center">
+            <div class="col-md-4 mb-4">
+                <div class="service-box">
+                    <img src="{% static 'images/oil.png' %}" alt="Oil Change" class="img-fluid mb-3">
+                    <h4 class="font-weight-bold">Oil Change</h4>
+                    <p>Keep your engine running smoothly with our professional oil change services.</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="service-box">
+                    <img src="{% static 'images/diagnostics.png' %}" alt="Diagnostics" class="img-fluid mb-3">
+                    <h4 class="font-weight-bold">Car Diagnostics</h4>
+                    <p>State-of-the-art diagnostics to identify and fix any issues.</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="service-box">
+                    <img src="{% static 'images/repair.png' %}" alt="Repairs" class="img-fluid mb-3">
+                    <h4 class="font-weight-bold">Repairs & Maintenance</h4>
+                    <p>From minor fixes to major repairs, we’ve got you covered.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Booking Section -->
+<section class="booking bg-primary text-white text-center py-5">
+    <div class="container">
+        <h2 class="font-weight-bold mb-4">Book an Appointment</h2>
+        <p class="lead mb-4">Need a service? Schedule an appointment today.</p>
+        <a href="{% url 'booking' %}" class="btn btn-light btn-lg">Book Now</a>
+    </div>
+</section>
+
+<!-- Contact Info -->
+<section class="contact bg-dark text-white text-center py-4">
+    <div class="container">
+        <h3 class="font-weight-bold mb-3">Contact Us</h3>
+        <p class="mb-2">📍 123 Garage Street, City, Country</p>
+        <p class="mb-2">📞 +123 456 7890 | ✉ info@garage.com</p>
+        <p>🕒 Mon-Sat: 8 AM - 6 PM</p>
+    </div>
+</section>
+
+{% endblock %}
+
+<!-- Custom CSS -->
+<style>
+    .service-box img {
+        height: 120px;  /* Set a fixed height for consistency */
+        width: 120px;   /* Ensures all images have the same width */
+        object-fit: cover; /* Ensures images fill the box while maintaining proportions */
+        display: block;
+        margin: 0 auto; /* Center the images */
+    }
+    
+</style>

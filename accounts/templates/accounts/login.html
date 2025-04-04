@@ -1,0 +1,29 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center" style="height: 80vh;">
+    <div class="card shadow p-4" style="max-width: 400px; width: 100%;">
+        <h3 class="text-center mb-4">Login</h3>
+        
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="id_username" class="form-label">Username</label>
+                <input type="text" name="username" id="id_username" class="form-control" placeholder="Enter your username" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="id_password" class="form-label">Password</label>
+                <input type="password" name="password" id="id_password" class="form-control" placeholder="Enter your password" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Login</button>
+        </form>
+
+        <div class="text-center mt-3">
+            <a href="{% url 'password_reset' %}" class="text-decoration-none">Forgot Password?</a> |
+            <a href="{% url 'register' %}" class="text-decoration-none">Sign Up</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

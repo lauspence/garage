@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Assign Mechanic</h2>
+  <p>Assign a mechanic to: <strong>{{ booking.name }}</strong> - {{ booking.service }}</p>
+
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Assign Mechanic</button>
+  </form>
+{% endblock %}

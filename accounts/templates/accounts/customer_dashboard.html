@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background-color: #343a40;
+            color: #fff;
+            border-radius: 10px 10px 0 0;
+            font-weight: bold;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .list-group-item {
+            border: none;
+            border-bottom: 1px solid #f1f1f1;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        .list-group-item:last-child {
+            border-bottom: none;
+        }
+
+        .navbar {
+            border-radius: 0 0 15px 15px;
+        }
+
+        footer {
+            background-color: #343a40;
+        }
+
+        .hero-section {
+            background-color: #007bff;
+            color: white;
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        .hero-section h2 {
+            font-size: 36px;
+        }
+
+        .hero-section p {
+            font-size: 18px;
+        }
+
+        .navbar-nav .nav-item {
+            margin-left: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">Garage System</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'services:services' %}">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'billing' %}">Billing</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'insurance' %}">Insurance</a></li>
+
+                    {% if user.is_authenticated %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'accounts:logout' %}">Logout</a></li>
+                    {% else %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'accounts:login' %}">Login</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <h2>Welcome, {{ user.username }}!</h2>
+        <p>Manage your services, billing, and insurance in one place.</p>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Your Services</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            <li class="list-group-item"><a href="{% url 'services:services' %}">View Available Services</a></li>
+                            <li class="list-group-item"><a href="{% url 'services:request_service' %}">Request a Service</a></li>
+                            <li class="list-group-item"><a href="{% url 'services:track_service_progress' %}">Track Service Progress</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Your Billing</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            <li class="list-group-item"><a href="{% url 'billing' %}">View Billing History</a></li>
+                            <li class="list-group-item"><a href="{% url 'make_payment' %}">Make a Payment</a></li>
+                            {% comment %} <li class="list-group-item"><a href="{% url 'create_estimate' %}">Create Estimate</a></li> {% endcomment %}
+                            <li class="list-group-item"><a href="{% url 'view_estimates' %}">View Estimates</a></li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Your Insurance</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            <li class="list-group-item"><a href="{% url 'insurance' %}">View Insurance Policy</a></li>
+                            <li class="list-group-item"><a href="#">Request Insurance</a></li>
+                            <li class="list-group-item"><a href="#">Insurance Claims</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3 mt-4">
+        <p>&copy; 2025 Garage System. All rights reserved.</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

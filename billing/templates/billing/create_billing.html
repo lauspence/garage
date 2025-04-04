@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billing for {{ vehicle.make }} {{ vehicle.model }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 60%;
+            margin: 30px auto;
+            background-color: #fff;
+            padding: 30px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            font-size: 16px;
+            color: #333;
+        }
+        .info {
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            font-weight: bold;
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Billing for {{ vehicle.make }} {{ vehicle.model }}</h1>
+
+    <div class="info">
+        <p><strong>Service:</strong> {{ booked_service.name }}</p>
+        <p><strong>Service Cost:</strong> KSH {{ booked_service.cost }}</p>
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {% if parts %}
+        <label for="part">Select Part (Optional):</label>
+        <select name="part" id="part">
+            <option value="" selected>Select a Part</option>
+            {% for part in parts %}
+                <option value="{{ part.id }}">{{ part.name }} - KSH {{ part.cost }}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+        {% endif %}
+
+        <label for="payment_method">Payment Method</label>
+        <input type="text" name="payment_method" id="payment_method" required>
+
+        <label for="payment_amount">Payment Amount</label>
+        <input type="number" name="payment_amount" id="payment_amount" required>
+
+        <br><br>
+
+        <button type="submit">Proceed to Invoice</button>
+    </form>
+</div>
+
+</body>
+</html>

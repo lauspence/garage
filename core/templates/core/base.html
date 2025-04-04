@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Garage System for managing vehicle services, billing, and insurance.">
+    <meta name="author" content="Your Name or Company Name">
+    <title>Garage System</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">Azaman Garage</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    {% if user.is_authenticated %}
+                        {% if user.role == 'mechanic' %}
+                            <!-- Only show Mechanic Dashboard for mechanics -->
+                            <li class="nav-item"><a class="nav-link" href="{% url 'mechanic_dashboard' %}">Mechanic Dashboard</a></li>
+                        {% elif user.role == 'admin' %}
+                            <!-- Show Admin Dashboard for admins -->
+                            <li class="nav-item"><a class="nav-link" href="{% url 'admin_dashboard' %}">Admin Dashboard</a></li>
+                        {% elif user.role == 'customer' %}
+                            <!-- Show Customer Dashboard for customers -->
+                            <li class="nav-item"><a class="nav-link" href="{% url 'customer_dashboard' %}">Customer Dashboard</a></li>
+                        {% endif %}
+
+                        <!-- Logout Form -->
+                        <form action="{% url 'logout' %}" method="POST" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="nav-link btn btn-link text-white">Logout</button>
+                        </form>
+                        
+                    {% else %}
+                        <!-- Login link for unauthenticated users -->
+                        <li class="nav-item"><a class="nav-link" href="{% url 'accounts:login' %}">Login</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3 mt-4">
+        <p>&copy; AZAMAN AUTO GARAGE MANAGEMENT SYSTEM . All rights reserved.</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

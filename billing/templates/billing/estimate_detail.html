@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-lg p-4">
+        <h2 class="text-center mb-4">Estimate Details</h2>
+        
+        <div class="mb-4">
+            <strong>Vehicle:</strong> {{ estimate.vehicle.registration_number }} - {{ estimate.vehicle.model }} ({{ estimate.vehicle.year }})
+            <br>
+            <small class="text-muted">Color: {{ estimate.vehicle.color }} | Insurance: {{ estimate.vehicle.insurance_company }}</small>
+        </div>
+
+        <div class="mb-4">
+            <strong>Status:</strong> {{ estimate.status }}
+        </div>
+
+        <h5>Estimate Items:</h5>
+        <ul class="list-group">
+            {% for item in estimate.items.all %}
+            <li class="list-group-item">
+                {{ item.part_name }} (x{{ item.quantity }}) - KSH {{ item.total_price }}
+            </li>
+            {% endfor %}
+        </ul>
+
+        <div class="mt-4 text-center">
+            <a href="{% url 'view_estimates' %}" class="btn btn-primary btn-lg">Back to Estimates</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

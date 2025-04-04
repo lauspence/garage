@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garage Insurance Services</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 900px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 40px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 36px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        h2 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .service-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .service-list li {
+            margin: 15px 0;
+            text-align: left;
+        }
+
+        .service-link {
+            display: block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 30px;
+            font-size: 18px;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+            text-align: center;
+        }
+
+        .service-link:hover {
+            background-color: #45a049;
+        }
+
+        .service-link:active {
+            background-color: #388e3c;
+        }
+
+        .service-link:focus {
+            outline: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            .service-link {
+                font-size: 16px;
+                padding: 10px 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Garage Insurance Services</h1>
+    <p>Manage your vehicle insurance policies and claims with ease at our garage. You can view, add, update, or delete insurance policies, and file claims when necessary.</p>
+
+    <h2>Available Actions</h2>
+    <ul class="service-list">
+        <li><a href="{% url 'view_insurance_policies' %}" class="service-link">View Insurance Policies</a></li>
+        <li><a href="{% url 'add_insurance_policy' %}" class="service-link">Add New Insurance Policy</a></li>
+        <li><a href="{% url 'file_insurance_claim' %}" class="service-link">File an Insurance Claim</a></li>
+        
+        <!-- Loop through the policies and generate links for each policy -->
+        {% for policy in insurance_policies %}
+            <li>
+                <a href="{% url 'update_insurance_policy' policy_id=policy.id %}" class="service-link">Update Insurance Policy</a>
+            </li>
+            <li>
+                <a href="{% url 'delete_insurance_policy' policy_id=policy.id %}" class="service-link">Delete Insurance Policy</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+</body>
+</html>

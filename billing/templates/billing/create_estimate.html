@@ -1,0 +1,93 @@
+<!-- create_estimate.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-lg p-4">
+        <h2 class="text-center mb-4">Create Estimate</h2>
+        <form method="POST">
+            {% csrf_token %}
+
+            <!-- Estimate Form -->
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Estimate Details</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Customer</label>
+                                {{ estimate_form.customer }}
+                                {% if estimate_form.customer.errors %}
+                                    <div class="text-danger">{{ estimate_form.customer.errors }}</div>
+                                {% endif %}
+                                <!-- Display the logged-in user’s name for clarity -->
+                                <small class="form-text text-muted">Logged in as: {{ request.user.username }}</small>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Vehicle</label>
+                                {{ estimate_form.vehicle }}
+                                {% if estimate_form.vehicle.errors %}
+                                    <div class="text-danger">{{ estimate_form.vehicle.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label class="form-label">Status</label>
+                                {{ estimate_form.status }}
+                                {% if estimate_form.status.errors %}
+                                    <div class="text-danger">{{ estimate_form.status.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Estimate Item Form -->
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">Estimate Items</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Part Name</label>
+                                {{ item_form.part_name }}
+                                {% if item_form.part_name.errors %}
+                                    <div class="text-danger">{{ item_form.part_name.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Quantity</label>
+                                {{ item_form.quantity }}
+                                {% if item_form.quantity.errors %}
+                                    <div class="text-danger">{{ item_form.quantity.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Unit Price</label>
+                                {{ item_form.unit_price }}
+                                {% if item_form.unit_price.errors %}
+                                    <div class="text-danger">{{ item_form.unit_price.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Save Estimate</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

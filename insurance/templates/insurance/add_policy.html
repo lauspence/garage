@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Insurance Policy</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 900px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 40px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 36px;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .form-group {
+            width: 100%;
+            max-width: 600px;
+            margin: 10px 0;
+            text-align: left;
+        }
+
+        label {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 14px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+            margin-top: 8px;
+            transition: border 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+
+        button {
+            padding: 14px 30px;
+            font-size: 18px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+            align-self: center;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        button:focus {
+            outline: none;
+        }
+
+        .back-link {
+            margin-top: 40px;
+            font-size: 16px;
+            color: #007BFF;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            input, select {
+                font-size: 14px;
+            }
+
+            button {
+                font-size: 16px;
+                padding: 12px 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Add New Insurance Policy</h1>
+    
+    <form method="post">
+        {% csrf_token %}
+        
+        <!-- Form Fields -->
+        <div class="form-group">
+            <label for="id_policy_number">Policy Number</label>
+            {{ form.policy_number }}
+            <div class="error">{{ form.policy_number.errors }}</div>
+        </div>
+
+        <div class="form-group">
+            <label for="id_provider">Provider</label>
+            {{ form.provider }}
+            <div class="error">{{ form.provider.errors }}</div>
+        </div>
+
+        <div class="form-group">
+            <label for="id_coverage_type">Coverage Type</label>
+            {{ form.coverage_type }}
+            <div class="error">{{ form.coverage_type.errors }}</div>
+        </div>
+
+        <div class="form-group">
+            <label for="id_premium_amount">Premium Amount</label>
+            {{ form.premium_amount }}
+            <div class="error">{{ form.premium_amount.errors }}</div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit">Add Policy</button>
+    </form>
+
+    <!-- Back Link -->
+    <a href="{% url 'view_insurance_policies' %}" class="back-link">Back to Policies</a>
+</div>
+
+</body>
+</html>

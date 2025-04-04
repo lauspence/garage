@@ -1,0 +1,198 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">📊 Admin Dashboard</h2>
+
+    <!-- Overview Cards -->
+    <div class="row text-center mt-4">
+        <div class="col-md-3">
+            <div class="card text-white bg-info mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Total Users</h5>
+                    <h3>{{ total_users }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Approved Bookings</h5>
+                    <h3>{{ approved_count }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-warning mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Pending Bookings</h5>
+                    <h3>{{ pending_count }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-danger mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Canceled Bookings</h5>
+                    <h3>{{ canceled_count }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Estimate Button for Admins -->
+    {% if user.is_superuser %}
+    <div class="text-center mt-4">
+        <a href="{% url 'create_estimate' %}" class="btn btn-primary btn-lg">Create Estimate</a>
+    </div>
+    {% endif %}
+
+    <!-- 🚗 Pending Estimate Requests -->
+    <div class="card mt-4">
+        <div class="card-header bg-warning text-dark text-center">
+            <h5>🔧 Pending Estimate Requests</h5>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered table-hover">
+                <thead class="table-warning">
+                    <tr>
+                        <th>Customer</th>
+                        <th>Vehicle</th>
+                        <th>Requested Parts</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for estimate in pending_estimates %}
+                    <tr>
+                        <td>{{ estimate.customer.username }}</td>
+                        <td>
+                            {% if estimate.vehicle %}
+                                {{ estimate.vehicle.registration_number }} ({{ estimate.vehicle.make }})
+                            {% else %}
+                                <span class="text-danger">No Vehicle Assigned</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <ul class="list-group">
+                                {% for item in estimate.items.all %}
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span>{{ item.part_name }} (x{{ item.quantity }})</span>
+                                        <span class="text-muted">KSH {{ item.unit_price|default:"TBD" }}</span>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                        <td>
+                            <a href="{% url 'create_estimate' %}" class="btn btn-primary btn-sm">Create Estimate</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center">No pending estimates.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 🔧 Available Mechanics -->
+    <div class="card mt-3">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">🔧 Available Mechanics</h5>
+        </div>
+        <div class="card-body">
+            {% if mechanics %}
+                <ul class="list-group">
+                    {% for mechanic in mechanics %}
+                        <li class="list-group-item">
+                            <i class="fas fa-user text-primary"></i> {{ mechanic.username }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-muted text-center">No mechanics available!</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- 📅 Booking Management Table -->
+    <div class="card mt-4">
+        <div class="card-header bg-dark text-white text-center">
+            <h5>Booking Management</h5>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Name</th>
+                        <th>Service</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Assigned Mechanic</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for booking in bookings %}
+                    <tr>
+                        <td>{{ booking.name }}</td>
+                        <td>{{ booking.get_service_display }}</td>
+                        <td>{{ booking.date }}</td>
+                        <td>
+                            <span class="badge 
+                                {% if booking.status == 'approved' %} bg-success 
+                                {% elif booking.status == 'completed' %} bg-primary 
+                                {% else %} bg-danger {% endif %}"> 
+                                {{ booking.status }}
+                            </span>
+                        </td>
+                        <td>
+                            {% if booking.mechanic %}
+                                {{ booking.mechanic.get_full_name|default:booking.mechanic.username }}
+                            {% else %}
+                                <form method="post" action="{% url 'admin_bookings' %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="booking_id" value="{{ booking.id }}">
+
+                                    <select name="mechanic_id" class="form-select form-select-sm mechanic-select" required>
+                                        <option value="" disabled selected>Assign Mechanic</option>
+                                        {% for mechanic in mechanics %}
+                                            <option value="{{ mechanic.id }}">{{ mechanic.username }} ({{ mechanic.get_full_name }})</option>
+                                        {% empty %}
+                                            <option disabled>No mechanics available</option>
+                                        {% endfor %}
+                                    </select>
+
+                                    <button type="submit" class="btn btn-primary btn-sm mt-2 assign-btn" disabled>Assign</button>
+                                </form>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{% url 'approve_booking' booking.id %}" class="btn btn-success btn-sm">Approve</a>
+                            <a href="{% url 'cancel_booking' booking.id %}" class="btn btn-danger btn-sm">Cancel</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center">No bookings found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".mechanic-select").forEach(function (select) {
+            select.addEventListener("change", function () {
+                this.closest("form").querySelector(".assign-btn").disabled = !this.value;
+            });
+        });
+    });
+</script>
+
+{% endblock %}

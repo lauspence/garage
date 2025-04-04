@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">🔧 Mechanic Dashboard</h4>
+        </div>
+        <div class="card-body">
+            <p class="lead">Welcome, <strong>{{ user.username }}</strong>! Here are your assigned jobs:</p>
+
+            {% if assigned_bookings %}
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Customer</th>
+                                <th>Service</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for booking in assigned_bookings %}
+                                <tr>
+                                    <td>{{ booking.name }}</td>
+                                    <td>{{ booking.get_service_display }}</td>
+                                    <td>{{ booking.date }}</td>
+                                    <td>
+                                        <span class="badge 
+                                            {% if booking.status == 'approved' %} bg-warning 
+                                            {% elif booking.status == 'completed' %} bg-success 
+                                            {% else %} bg-danger {% endif %}">
+                                            {{ booking.get_status_display }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'update_booking_status' booking.id %}" class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-edit"></i> Update Status
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="alert alert-info text-center">
+                    <i class="fas fa-info-circle"></i> No jobs assigned to you yet.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-primary text-white text-center py-3">
+                    <h4 class="fw-bold"><i class="fas fa-car"></i> Request an Estimate</h4>
+                </div>
+                <div class="card-body">
+                    <form method="POST" class="needs-validation" novalidate>
+                        {% csrf_token %}
+
+                        <!-- 🚗 Vehicle Details Section -->
+                        <div class="mb-4">
+                            <h5 class="text-center text-secondary fw-bold">🚗 Vehicle Details</h5>
+                            <hr class="mb-3">
+                            <div class="row g-3">
+                                {% for field in form %}
+                                    {% if field.name != "parts" %}
+                                        <div class="col-md-6">
+                                            <label for="{{ field.id_for_label }}" class="form-label fw-bold">{{ field.label }}</label>
+                                            {{ field }}
+                                            {% if field.errors %}
+                                                <div class="text-danger small">{{ field.errors|striptags }}</div>
+                                            {% endif %}
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <!-- 🛠️ Parts Required Section -->
+                        <div class="mb-4">
+                            <h5 class="text-center text-secondary fw-bold">🛠️ Parts Required</h5>
+                            <hr class="mb-3">
+                            <div class="mb-3">
+                                <label for="{{ form.parts.id_for_label }}" class="form-label fw-bold">
+                                    List Parts (Format: Part Name - Quantity)
+                                </label>
+                                {{ form.parts }}
+                                <small class="text-muted">Example: Headlight - 2</small>
+                            </div>
+                        </div>
+
+                        <!-- 🔘 Buttons Section -->
+                        <div class="d-flex justify-content-center gap-3 mt-4">
+                            <a href="{% url 'view_estimates' %}" class="btn btn-outline-secondary px-4">
+                                <i class="fas fa-arrow-left"></i> Back
+                            </a>
+                            <button type="submit" class="btn btn-primary px-4">
+                                <i class="fas fa-paper-plane"></i> Submit
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FontAwesome for icons & Bootstrap Styling -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<style>
+    /* Container Padding */
+    .container {
+        max-width: 800px;
+    }
+
+    /* Form Input Styling */
+    .form-control {
+        border-radius: 8px;
+        padding: 10px;
+        border: 1px solid #ced4da;
+        transition: all 0.3s ease-in-out;
+    }
+    .form-control:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+    }
+
+    /* Card Styling */
+    .card {
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Section Headers */
+    h5 {
+        font-weight: 600;
+    }
+    hr {
+        border-top: 2px solid #ccc;
+    }
+
+    /* Buttons */
+    .btn {
+        border-radius: 8px;
+        padding: 10px 15px;
+        font-size: 16px;
+    }
+
+    /* Submit Button Animation */
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #004c9b;
+    }
+</style>
+{% endblock %}

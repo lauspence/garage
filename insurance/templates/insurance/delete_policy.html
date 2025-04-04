@@ -1,0 +1,7 @@
+<!-- templates/insurance/delete_policy.html -->
+<h1>Delete Insurance Policy</h1>
+<p>Are you sure you want to delete the policy {{ policy.policy_number }}?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Delete</button>
+</form>

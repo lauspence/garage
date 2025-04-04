@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Update Booking Status</h2>
+  <p>Update status for: <strong>{{ booking.name }}</strong> - {{ booking.service }}</p>
+
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Update Status</button>
+  </form>
+{% endblock %}

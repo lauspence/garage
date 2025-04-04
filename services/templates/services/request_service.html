@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Request a Service</h2>
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="mb-3">
+            <label class="form-label">{{ form.service.label }}</label>
+            {{ form.service }}  <!-- Ensure this is rendering correctly -->
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">{{ form.vehicle.label }}</label>
+            {{ form.vehicle }}
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">{{ form.date.label }}</label>
+            {{ form.date }}
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">{{ form.message.label }}</label>
+            {{ form.message }}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit Request</button>
+    </form>
+</div>
+{% endblock %}

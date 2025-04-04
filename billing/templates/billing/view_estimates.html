@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">Estimates</h2>
+    
+    {% if user.is_superuser %}
+        <!-- Admin can view all estimates -->
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="list-group">
+                    {% for estimate in estimates %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong>{{ estimate.vehicle.registration_number }}</strong> - {{ estimate.vehicle.model }} ({{ estimate.vehicle.year }})<br>
+                            <small class="text-muted">Color: {{ estimate.vehicle.color }} | Insurance: {{ estimate.vehicle.insurance_company }}</small>
+                        </div>
+                        <a href="{% url 'estimate_detail' estimate.id %}" class="btn btn-sm btn-info">
+                            View Details
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    {% else %}
+        <!-- Regular user only sees estimates for their vehicle -->
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="list-group">
+                    {% for estimate in estimates %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong>{{ estimate.vehicle.registration_number }}</strong> - {{ estimate.vehicle.model }} ({{ estimate.vehicle.year }})<br>
+                            <small class="text-muted">Color: {{ estimate.vehicle.color }} | Insurance: {{ estimate.vehicle.insurance_company }}</small>
+                        </div>
+                        <a href="{% url 'estimate_detail' estimate.id %}" class="btn btn-sm btn-info">
+                            View Details
+                        </a>
+                    </li>
+                    {% empty %}
+                        <p>No estimates found for your vehicle.</p>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    {% endif %}
+
+    <!-- Request Estimate Button (for Users) -->
+    {% if not user.is_superuser %}
+        <a href="{% url 'request_estimate' %}" class="btn btn-primary mt-4">Request an Estimate</a>
+    {% endif %}
+</div>
+{% endblock %}

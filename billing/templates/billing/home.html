@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billing System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+        }
+        h1 {
+            margin: 0;
+        }
+        .container {
+            padding: 20px;
+            text-align: center;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            margin: 10px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .btn:hover {
+            background-color: #45a049;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Garage Billing System</h1>
+        <p>Manage invoices, payments, and transactions.</p>
+    </header>
+
+    <div class="container">
+        <h2>Welcome to the Garage Billing System!</h2>
+        <p>Choose an action below to get started:</p>
+
+        <div>
+            <a href="{% url 'create_customer' %}" class="btn">Create Customer</a>
+            <a href="{% url 'create_booking' 0 %}" class="btn">Create booking</a>
+            <a href="{% url 'create_billing' 0 %}" class="btn">Generate Billing</a>
+            <a href="{% url 'generate_invoice' 0 %}" class="btn">View Invoices</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Garage Billing System. All rights reserved.</p>
+    </footer>
+</body>
+</html>

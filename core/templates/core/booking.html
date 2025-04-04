@@ -1,0 +1,83 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+
+    <!-- Success Message -->
+    {% if messages %}
+    <div class="alert alert-success text-center" role="alert">
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-primary text-white text-center">
+                    <h2 class="fw-bold">📅 Book a Service Appointment</h2>
+                    <p class="mb-0">Schedule your garage service in just a few clicks!</p>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{% url 'make_payment' %}">
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                            <label for="name" class="form-label fw-bold">Full Name</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter your full name" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label fw-bold">Email Address</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="phone" class="form-label fw-bold">Phone Number</label>
+                            <input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter your phone number" required>
+                        </div>
+
+                        <!-- Vehicle Registration Number -->
+                        <div class="mb-3">
+                            <label for="vehicle_registration_number" class="form-label fw-bold">Vehicle Registration Number</label>
+                            <input type="text" class="form-control" id="vehicle_registration_number" name="vehicle_registration_number" placeholder="Enter vehicle registration number" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="service" class="form-label fw-bold">Select Service</label>
+                            <select class="form-select" id="service" name="service" required>
+                                <option value="" disabled selected>-- Choose a Service --</option>
+                                <option value="oil_change">🔧 Oil Change</option>
+                                <option value="brake_check">🚗 Brake Check</option>
+                                <option value="tire_replacement">&#128690; Tire Replacement</option>
+                                <option value="engine_diagnosis">🛠️ Engine Diagnosis</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="date" class="form-label fw-bold">Preferred Date</label>
+                            <input type="date" class="form-control" id="date" name="date" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="message" class="form-label fw-bold">Additional Notes</label>
+                            <textarea class="form-control" id="message" name="message" rows="3" placeholder="Any special requests?"></textarea>
+                        </div>
+
+                        <!-- Hidden Fields for Payment -->
+                        <input type="hidden" name="amount" value="5000"> <!-- Example amount -->
+
+                        <button type="submit" class="btn btn-primary w-100 py-2 fw-bold">
+                            ✅ Confirm Booking & Proceed to Payment
+                        </button>
+                    </form>
+                </div>
+                <div class="card-footer text-center text-muted">
+                    <small>We will confirm your booking via email or phone.</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice - {{ invoice.invoice_number }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .invoice-header {
+            text-align: center;
+            padding: 10px;
+            background: #007bff;
+            color: #fff;
+            border-radius: 8px 8px 0 0;
+        }
+        .invoice-details {
+            padding: 15px;
+            background: #fff;
+            border-radius: 0 0 8px 8px;
+        }
+        .info {
+            margin-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background: #007bff;
+            color: #fff;
+        }
+        .total {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: right;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="invoice-header">
+        <h1>Invoice: {{ invoice.invoice_number }}</h1>
+    </div>
+
+    <div class="invoice-details">
+        <p class="info"><strong>Date:</strong> {{ invoice.date_created }}</p>
+        <p class="info"><strong>Payment Status:</strong> {{ invoice.payment_status }}</p>
+    
+        <h3>Billing Details:</h3>
+        <p><strong>Vehicle:</strong> {% if billing.booking.vehicle %}{{ billing.booking.vehicle.registration_number }} ({{ billing.booking.vehicle.make }} {{ billing.booking.vehicle.model }}){% else %}Not Available{% endif %}</p>
+    
+        <table>
+            <thead>
+                <tr>
+                    <th>Service/Part</th>
+                    <th>Cost (KSH)</th>
+                    <th>Quantity</th>
+                    <th>Total (KSH)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ billing.booking.service.name }}</td>
+                    <td>{{ billing.booking.service.cost }}</td>
+                    <td>{{ billing.part_quantity }}</td>
+                    <td>{{ billing.booking.service.cost|add:billing.part_quantity }}</td>  <!-- You can adjust this calculation -->
+                </tr>
+                {% if billing.part %}
+                <tr>
+                    <td>{{ billing.part.name }}</td>
+                    <td>{{ billing.part.cost }}</td>
+                    <td>{{ billing.part_quantity }}</td>
+                    <td>{{ billing.part.cost|floatformat:2|add:billing.part_quantity }}</td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    
+        <p class="total">Total Amount: KSH {{ invoice.total_amount }}</p>
+    </div>
+    
+    
+</body>
+</html>

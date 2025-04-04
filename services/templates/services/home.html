@@ -1,0 +1,90 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <!-- Header Section -->
+    <div class="text-center mb-4">
+        <h1 class="fw-bold">🚗 Our Garage Services</h1>
+        <p class="lead text-muted">Reliable, efficient, and affordable car services tailored for you.</p>
+    </div>
+
+    <!-- Service Categories Section -->
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 text-center">
+                <div class="image-container">
+                    <img src="{% static 'images/oil.png' %}" class="card-img-top service-img" alt="Oil Change">
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">Oil Change</h5>
+                    <p class="card-text text-muted">Keep your engine running smoothly with our professional oil change service.</p>
+                    <a href="{% url 'services:service_list' %}" class="btn btn-primary">Explore Services</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 text-center">
+                <div class="image-container">
+                    <img src="{% static 'images/brake.png' %}" class="card-img-top service-img" alt="Brake Check">
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">Brake Check</h5>
+                    <p class="card-text text-muted">Ensure your safety with our detailed brake inspection and repair.</p>
+                    <a href="{% url 'services:service_list' %}" class="btn btn-primary">Explore Services</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 text-center">
+                <div class="image-container">
+                    <img src="{% static 'images/diagnostics.png' %}" class="card-img-top service-img" alt="Tire Replacement">
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">Tire Replacement</h5>
+                    <p class="card-text text-muted">High-quality tires for all vehicle types at affordable prices.</p>
+                    <a href="{% url 'services:service_list' %}" class="btn btn-primary">Explore Services</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="mt-5 text-center">
+        <h3 class="fw-bold">Need a Service?</h3>
+        <p class="text-muted">Book an appointment today and let our experts take care of your vehicle.</p>
+        <a href="{% url 'booking' %}" class="btn btn-success btn-lg">📅 Book Now</a>
+    </div>
+</div>
+
+<!-- Custom CSS -->
+<style>
+    .service-img {
+        height: 150px; /* Ensures all images have the same height */
+        width: 100%; /* Ensures they scale properly within the card */
+        object-fit: contain; /* Ensures images are contained without distortion */
+        padding: 15px; /* Adds spacing around the image */
+    }
+
+    .card {
+        border-radius: 10px;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">🔍 Track Your Service Progress</h2>
+
+    {% if bookings %}
+        <div class="row">
+            {% for booking in bookings %}
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card shadow-lg border-0 rounded">
+                        <div class="card-body">
+                            <h5 class="card-title text-primary">
+                                🚗 {{ booking.get_service_display }}
+                            </h5>
+                            <p class="card-text text-muted">
+                                <strong>Vehicle:</strong> {{ booking.vehicle.registration_number }}
+                            </p>
+
+                            <!-- Status Badge -->
+                            <span class="badge py-2 px-3 text-white fw-bold 
+                                {% if booking.status == 'completed' %} bg-success 
+                                {% elif booking.status == 'in_progress' %} bg-warning text-dark 
+                                {% elif booking.status == 'approved' %} bg-info 
+                                {% elif booking.status == 'cancelled' %} bg-danger 
+                                {% else %} bg-secondary {% endif %}">
+                                {{ booking.status }}
+                            </span>
+
+                            <hr>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-muted">📅 Requested: {{ booking.created_at|date:"F j, Y" }}</small>
+                                <a href="{% url 'services:booking_detail' booking.id %}" class="btn btn-outline-primary btn-sm">
+                                    🔍 View Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info text-center p-4">
+            🚘 No active service requests found.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

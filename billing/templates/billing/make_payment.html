@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Make a Payment</h2>
+    <p>You're paying for: <strong>{{ service }}</strong></p>
+    <p>Amount: <strong>KSH {{ amount }}</strong></p>
+
+    <form action="{% url 'process_payment' %}" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="service" value="{{ service }}">
+        <input type="hidden" name="amount" value="{{ amount }}">
+        
+        <button type="submit" class="btn btn-success">Pay Now</button>
+    </form>
+</div>
+{% endblock %}

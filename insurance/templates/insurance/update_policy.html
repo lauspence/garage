@@ -1,0 +1,7 @@
+<!-- templates/insurance/update_policy.html -->
+<h1>Update Insurance Policy</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Update Policy</button>
+</form>
